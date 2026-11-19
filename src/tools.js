@@ -12,6 +12,7 @@ import { composeAttemptLimits, composeCallableTimeSet, composeContactList, caden
 import { AVA_TOOLS, AVA_WRITE_TOOLS, AVA_TOOL_GROUP } from './ava-tools.js';
 import { VOICE_TOOLS, VOICE_WRITE_TOOLS, VOICE_TOOL_GROUP } from './voice-tools.js';
 import { refusalFor, redactSecrets, redactNamedValues, redactArchyYaml } from './rules.js';
+import { AUDIT_TOOL } from './audit.js';
 
 // ---------- name → object resolution helpers ----------
 
@@ -930,6 +931,9 @@ export const TOOLS = [
     },
   },
 
+  // ----- audit (read-only) -----
+  AUDIT_TOOL,
+
   // ----- power tool -----
   {
     name: 'genesys_api_call',
@@ -994,7 +998,7 @@ export const WRITE_TOOLS = new Set([
 ]);
 
 export const TOOL_GROUPS = [
-  { name: 'Org & Connection', icon: '🔌', tools: ['about', 'check_connection', 'list_divisions', 'list_did_pools'] },
+  { name: 'Org & Connection', icon: '🔌', tools: ['about', 'check_connection', 'list_divisions', 'list_did_pools', 'audit_report'] },
   { name: 'Queues & Routing', icon: '📞', tools: ['list_queues', 'get_queue', 'create_queue', 'list_wrapup_codes', 'create_wrapup_code'] },
   { name: 'Users & Skills', icon: '👥', tools: ['list_users', 'get_user', 'list_skills', 'create_skill', 'assign_user_skill'] },
   { name: 'Schedules & Hours', icon: '🕐', tools: ['list_schedules', 'create_schedule', 'create_schedule_group'] },
