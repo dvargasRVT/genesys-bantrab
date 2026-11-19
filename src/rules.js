@@ -113,6 +113,9 @@ export const WRITE_FAMILIES = [
   ['AVA test chat sessions', [['POST', 'apps/agentic/virtualagents/{id}/sessions'], ['POST', 'apps/agentic/virtualagents/{id}/sessions/{id}/turns']]],
   ['knowledge sources, synchronizations, settings', [['POST', 'knowledge/sources'], ['POST', 'knowledge/sources/{id}/synchronizations'], ['PATCH', 'knowledge/sources/{id}/synchronizations/{id}'], ['POST', 'knowledge/sources/{id}/synchronizations/{id}/uploads'], ['POST', 'knowledge/settings'], ['PATCH', 'knowledge/settings/{id}']]],
   ['integrations data action drafts', [['POST', 'integrations/actions/drafts'], ['PATCH', 'integrations/actions/{id}/draft'], ['POST', 'integrations/actions/{id}/draft/publish']]],
+  // Read-only queries that Genesys exposes as POST. They change nothing in the
+  // org; results of the async query are fetched with GET audits/query/{id}/results.
+  ['audit queries (read-only: audits/query, audits/query/realtime)', [['POST', 'audits/query'], ['POST', 'audits/query/realtime']]],
 ];
 
 const WRITES = WRITE_FAMILIES.flatMap(([, pairs]) => pairs.map(([m, p]) => [m, R(p)]));
