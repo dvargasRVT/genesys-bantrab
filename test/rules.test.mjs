@@ -207,6 +207,16 @@ test('the write allowlist refuses everything outside the typed families', () => 
   refused('POST', '/api/v2/flows/datatables', {});
 });
 
+test('read-only audit queries are allowed, other audit writes are not', () => {
+  const body = { interval: '2026-03-01T00:00:00Z/2026-11-19T00:00:00Z', serviceName: 'Directory', filters: [{ property: 'EntityType', value: 'User' }] };
+  allowed('POST', '/api/v2/audits/query', body);
+  allowed('POST', '/api/v2/audits/query/realtime', body);
+  allowed('GET', `/api/v2/audits/query/${G}/results`);
+  refused('PUT', '/api/v2/audits/query', body, undefined, /allowlist/);
+  refused('POST', `/api/v2/audits/query/${G}`, body, undefined, /allowlist/);
+  refused('POST', '/api/v2/audits/query/servicemapping', {}, undefined, /allowlist/);
+});
+
 test('the allowlist still permits the build writes the typed tools do', () => {
   allowed('POST', '/api/v2/routing/queues', { name: 'MCP_Test_Queue' });
   allowed('PUT', `/api/v2/routing/queues/${G}`, { name: 'MCP_Test_Queue', description: 'x' });
